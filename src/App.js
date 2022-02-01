@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useEffect, useRef } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const config = {
+  flowType: "YOUR_FLOW_TYPE",
+  credentials: {
+    apiKey: "YOUR_API_KEY",
+    clientSecret: "YOUR_CLIENT_SECRET",
+    tenant: "YOUR_TENANT",
+    banknu: "YOUR_BANKNU",
+    env: "YOUR_ENV",
+  },
+  deskVerificationEnabled: true,
+  currentUserInfo: {
+    cifCode: "YOUR_CIFCODE",
+  },
+};
+
+export default function App() {
+  const pvtButtonRef = useRef(null);
+  useEffect(() => {
+    const pvtButton = pvtButtonRef.current;
+    pvtButton.addEventListener("loaded", () => {
+      pvtButton.initialize(config);
+    });
+  }, []);
+
+  return <pvt-button ref={pvtButtonRef} config={config}></pvt-button>;
 }
-
-export default App;
